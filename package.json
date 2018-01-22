@@ -4,13 +4,11 @@
     "description": "",
     "main": "app.js",
     "dependencies": {
+        "typescript": "^2.6.2",
         "env-var": "^3.1.0",
         "express": "^4.16.2",
         "selenium-webdriver": "^4.0.0-alpha.1"
-    },
-    "devDependencies": {
-        "typescript": "^2.6.2"
-    },
+    },    
     "scripts": {
         "start": "node node_modules/typescript/bin/tsc && node build/app.js"
     },
