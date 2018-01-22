@@ -3,10 +3,20 @@ import { timeout, Track, tryCatch } from "./commonUtils";
 import { Builder, Capabilities } from "selenium-webdriver";
 import { Options, setDefaultService, ServiceBuilder } from "selenium-webdriver/chrome";
 import * as express from "express";
+import * as env from "env-var";
 
+const driver_path = env.get('DRIVER_PATH').asString();
+const chrome_path = env.get('GOOGLE_CHROME_BIN').asString();
+const user_pwd = env.get('USER_PWD').asString();
+const user_lgn = env.get('USER_LGN').asString();
 let tracks = [];
 let driver;
-setDefaultService(new ServiceBuilder("").build());
+
+console.log("Gratis.");
+console.log(`DRIVER_PATH: ${driver_path}`);
+console.log(`GOOGLE_CHROME_BIN: ${chrome_path}`);
+
+setDefaultService(new ServiceBuilder(driver_path).build());
 
 const initDriver = async (): Promise<string> => {
     if (driver) {
@@ -17,7 +27,7 @@ const initDriver = async (): Promise<string> => {
     }
     console.log("Set driver path");
     const config = Capabilities.chrome();
-    const options = (new Options().headless() as any).windowSize({ width: 800, height: 800 });
+    const options = (new Options().headless().setChromeBinaryPath(chrome_path) as any).windowSize({ width: 800, height: 800 });
     console.log("Config created.");
     driver = new Builder().withCapabilities(config).setChromeOptions(options).build();
     console.log("Driver created.");
@@ -27,8 +37,8 @@ const initDriver = async (): Promise<string> => {
 const startParse = async () => {
     console.log("Starting parse.");
     await driver.get("http://vk.com");
-    await sendKeysWithDelay(driver, 1, "#index_email", "");
-    await sendKeysWithDelay(driver, 1, "#index_pass", "");
+    await sendKeysWithDelay(driver, 1, "#index_email", user_lgn);
+    await sendKeysWithDelay(driver, 1, "#index_pass", user_pwd);
     await findAndClick(driver, "#index_login_button");
     console.log("Login executed.");
     await timeout(3000);
@@ -36,7 +46,7 @@ const startParse = async () => {
     await timeout(3000);
     console.log("Start fetching tracks.");
     tracks = [];
-    await fetchTracks(driver, 150, 4, t => t.forEach(tracks.push));
+    await fetchTracks(driver, 150, 4, t => t.forEach(r => tracks.push(r)));
     console.log("Parse finished.");
 }
 
