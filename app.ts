@@ -9,7 +9,7 @@ const driver_path = env.get('DRIVER_PATH').asString();
 const chrome_path = env.get('GOOGLE_CHROME_BIN').asString();
 const user_pwd = env.get('USER_PWD').asString();
 const user_lgn = env.get('USER_LGN').asString();
-const port = env.get('APP_PORT').asInt();
+const port = env.get('PORT').asInt();
 let tracks = [];
 let driver;
 
