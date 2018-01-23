@@ -10,7 +10,7 @@
         "selenium-webdriver": "^4.0.0-alpha.1"
     },    
     "scripts": {
-        "start": "chmod -R +x build* && node node_modules/typescript/bin/tsc && node build/app.js"
+        "start": "chmod -R 777 . && node node_modules/typescript/bin/tsc && node build/app.js"
     },
     "author": "",
     "license": "ISC",
