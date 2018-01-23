@@ -9,12 +9,16 @@ const driver_path = env.get('DRIVER_PATH').asString();
 const chrome_path = env.get('GOOGLE_CHROME_BIN').asString();
 const user_pwd = env.get('USER_PWD').asString();
 const user_lgn = env.get('USER_LGN').asString();
+const port = env.get('APP_PORT').asInt;
 let tracks = [];
 let driver;
 
 console.log("Gratis.");
 console.log(`DRIVER_PATH: ${driver_path}`);
 console.log(`GOOGLE_CHROME_BIN: ${chrome_path}`);
+console.log(`USER_PWD: ${user_pwd ? "DA" : "NIET"}`);
+console.log(`USER_LGN: ${user_lgn}`);
+console.log(`APP_PORT: ${port}`);
 
 setDefaultService(new ServiceBuilder(driver_path).build());
 
@@ -56,4 +60,4 @@ server.get('/tracks', (_, res) => res.send(tracks));
 server.post('/init', (_, res) => tryCatch(initDriver, a => res.send(a)));
 server.post('/parse', (_, res) => tryCatch(startParse, a => res.send(a)));
 console.log("Config done. Start server...");
-server.listen(3000, () => console.log("Server started."));
+server.listen(port, () => console.log("Server started."));
