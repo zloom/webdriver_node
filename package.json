@@ -13,5 +13,8 @@
         "start": "node node_modules/typescript/bin/tsc && node build/app.js"
     },
     "author": "",
-    "license": "ISC"
+    "license": "ISC",
+    "engines": {
+        "node": "8.7.0"
+    }
 }
